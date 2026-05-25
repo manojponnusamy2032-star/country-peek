@@ -45,7 +45,7 @@ function CountryCard({ country }) {
 					<h3 className="card__name">{name?.common}</h3>
 					<p><span>Population:</span> {population?.toLocaleString()}</p>
 					<p><span>Region:</span> {region}</p>
-					<p><span>Capital:</span> {capital?.[0] ?? 'N/A'}</p>
+					  {capital?.[0] && <p><span>Capital:</span> {capital[0]}</p>}
 				</div>
 			</Link>
 		</div>

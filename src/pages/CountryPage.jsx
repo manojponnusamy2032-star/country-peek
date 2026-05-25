@@ -1,5 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import NotFound from './NotFound';
 
 function CountryPage() {
 	const { name } = useParams();
@@ -25,8 +26,9 @@ function CountryPage() {
 			.finally(() => setLoading(false));
 	}, [name]);
 
+
 	if (loading) return <p className="home__status">Loading...</p>;
-	if (error) return <p className="home__status home__status--error">{error}</p>;
+	if (error) return <NotFound />;
 	if (!country) return null;
 
 	return (

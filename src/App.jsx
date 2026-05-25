@@ -16,6 +16,11 @@ function App() {
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
+          <footer className="footer">
+            <p>
+              Data from <a href="https://restcountries.com/" target="_blank" rel="noopener noreferrer">RestCountries API</a> | Built by Manoj Ponnusamy
+            </p>
+          </footer>
         </BrowserRouter>
       </FavouritesProvider>
     </ThemeProvider>

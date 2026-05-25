@@ -1,3 +1,54 @@
+.footer {
+  margin-top: 2rem;
+  padding: 1.5rem 0;
+  text-align: center;
+  color: #64748b;
+  background: #f3f4f6;
+  font-size: 1rem;
+}
+.footer a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+.filter-bar {
+  margin: 1rem 0 2rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.filter-bar select {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+  font-size: 1rem;
+}
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 0.5rem;
+  }
+  .home {
+    padding: 0.5rem;
+  }
+  .cards-grid {
+    gap: 1rem;
+    padding: 1rem 0;
+  }
+  .card__body {
+    padding: 0.75rem;
+  }
+  .filter-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  .back-to-top {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+}
 .retry-btn {
   margin-top: 1rem;
   background: #2563eb;

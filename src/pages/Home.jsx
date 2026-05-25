@@ -19,14 +19,18 @@ function BackToTop() {
     </button>
   );
 }
+
 import SearchBar from '../components/SearchBar';
 import CountryCard from '../components/CountryCard';
 import Loader from '../components/Loader';
+import FilterBar from '../components/FilterBar';
+
 
   const [query, setQuery] = useState('');
   const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [region, setRegion] = useState('');
   const lastQuery = useRef('');
 
   // Fetch countries from API for a given query
@@ -67,9 +71,15 @@ import Loader from '../components/Loader';
     return () => clearTimeout(timer);
   }, [query]);
 
+  // Filter countries by region if selected
+  const filteredCountries = region
+    ? countries.filter(c => c.region === region)
+    : countries;
+
   return (
     <div className="home">
       <SearchBar query={query} onQueryChange={setQuery} />
+      <FilterBar region={region} onRegionChange={setRegion} />
 
       {loading && <Loader />}
       {error && (
@@ -81,9 +91,9 @@ import Loader from '../components/Loader';
         </div>
       )}
 
-      {!loading && !error && countries.length > 0 && (
+      {!loading && !error && filteredCountries.length > 0 && (
         <div className="cards-grid">
-          {countries.map((country) => (
+          {filteredCountries.map((country) => (
             <CountryCard key={country.cca3} country={country} />
           ))}
         </div>
