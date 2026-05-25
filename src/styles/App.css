@@ -141,19 +141,7 @@
 .page-status--error {
   color: #ef4444;
 }
-.fav-btn {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0.25rem;
-}
-.fav-btn:focus-visible {
-  outline: 2px solid #ef4444;
-  outline-offset: 2px;
-}
-.fav-btn--active {
-  transform: scale(1.05);
-}
+
 @media (max-width: 800px) {
   .country-page__layout {
     grid-template-columns: 1fr;
@@ -211,7 +199,7 @@
     padding: 1rem 0;
   }
   .card__body {
-    padding: 0.75rem;
+    padding: 0.75rem 0.75rem 0.25rem 0.75rem;
   }
   .filter-bar {
     flex-direction: column;
@@ -295,22 +283,53 @@
 .clear-btn:hover {
   background: rgba(224, 231, 255, 0.2);
 }
+
+/* Favourites toggle button */
+.card__footer {
+  padding: 0 1.25rem 1.25rem 1.25rem;
+  display: flex;
+  justify-content: flex-start;
+}
+
 .fav-btn {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
   background: none;
-  border: none;
-  font-size: 1.5rem;
-  color: #fbbf24;
+  border: 1px solid var(--input-border);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 500;
   cursor: pointer;
-  z-index: 2;
-  transition: transform 0.2s;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
 }
-.fav-btn--active {
-  color: #f59e42;
-  transform: scale(1.2);
+.fav-btn:hover {
+  background: var(--back-btn-hover-bg);
+  color: var(--text);
+  border-color: var(--text-muted);
 }
+.fav-btn:focus-visible {
+  outline: 2px solid var(--border-badge-border);
+  outline-offset: 2px;
+}
+.fav-btn--saved {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #ef4444;
+}
+[data-theme='dark'] .fav-btn--saved {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #f87171;
+}
+.fav-btn--saved:hover {
+  background: #fee2e2;
+  color: #dc2626;
+  border-color: #fca5a5;
+}
+
 .card {
   position: relative;
 }
@@ -329,6 +348,7 @@
   box-shadow: var(--shadow);
   text-decoration: none;
   transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s, color 0.2s;
+  overflow: hidden;
 }
 .card:hover {
   transform: translateY(-6px);
@@ -342,7 +362,7 @@
   border-top-right-radius: 1rem;
 }
 .card__body {
-  padding: 1rem 1.25rem 1.25rem 1.25rem;
+  padding: 1rem 1.25rem;
 }
 .card__name {
   font-size: 1.2rem;

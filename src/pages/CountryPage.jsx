@@ -1,17 +1,15 @@
-
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import useCountry from '../hooks/useCountry';
-import { useEffect, useState, useContext } from 'react';
-import { FavouritesContext } from '../context/ThemeContext';
+import { useEffect, useState } from 'react';
+import { useFavourites } from '../context/FavouritesContext';
 import Skeleton from '../components/Loader';
 import '../styles/App.css';
-
 
 function CountryPage() {
 	const { code } = useParams();
 	const navigate = useNavigate();
 	const { country, loading, error } = useCountry(code);
-	const { favourites, toggleFavourite } = useContext(FavouritesContext);
+	const { favourites, dispatch } = useFavourites();
 	const [borderNames, setBorderNames] = useState({});
 
 	// Fetch border country names for display
@@ -55,6 +53,14 @@ function CountryPage() {
 	const currencyList = currencies ? Object.values(currencies).map(c => c.name) : [];
 	const isFav = favourites && country ? favourites.some(fav => fav.cca3 === country.cca3) : false;
 
+	const handleFavouriteToggle = () => {
+		if (isFav) {
+			dispatch({ type: 'REMOVE_FAVOURITE', payload: country.cca3 });
+		} else {
+			dispatch({ type: 'ADD_FAVOURITE', payload: country });
+		}
+	};
+
 	return (
 		<div className="country-page">
 			<button className="back-btn" onClick={() => navigate(-1)}>&larr; Back</button>
@@ -68,15 +74,16 @@ function CountryPage() {
 					<div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
 						<h2 className="country-page__name">{name?.common}</h2>
 						<button
-							className={`fav-btn${isFav ? ' fav-btn--active' : ''}`}
+							className={`fav-btn${isFav ? ' fav-btn--saved' : ''}`}
 							aria-label={isFav ? 'Remove from favourites' : 'Add to favourites'}
 							title={isFav ? 'Remove from favourites' : 'Add to favourites'}
-							onClick={() => toggleFavourite(country)}
+							onClick={handleFavouriteToggle}
+							style={{ position: 'static', transform: 'none', background: 'none', border: 'none', fontSize: '1.7rem', cursor: 'pointer' }}
 						>
 							{isFav ? (
-								<span aria-hidden="true" role="img" style={{ color: '#ef4444', fontSize: '1.7rem' }}>♥</span>
+								<span aria-hidden="true" role="img" style={{ color: '#ef4444' }}>♥</span>
 							) : (
-								<span aria-hidden="true" role="img" style={{ color: '#d1d5db', fontSize: '1.7rem' }}>♡</span>
+								<span aria-hidden="true" role="img" style={{ color: '#d1d5db' }}>♡</span>
 							)}
 						</button>
 					</div>
