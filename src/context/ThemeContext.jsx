@@ -1,6 +1,7 @@
-// Favourites context for storing favourite countries
-import { createContext, useState, useEffect } from 'react';
+// Favourites and Theme Context
+import { createContext, useState, useEffect, useContext } from 'react';
 
+// 1. Favourites Context
 export const FavouritesContext = createContext();
 
 export function FavouritesProvider({ children }) {
@@ -30,8 +31,8 @@ export function FavouritesProvider({ children }) {
 		</FavouritesContext.Provider>
 	);
 }
-import { createContext, useState, useEffect } from 'react';
 
+// 2. Theme Context
 export const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
@@ -41,7 +42,11 @@ export function ThemeProvider({ children }) {
 	});
 
 	useEffect(() => {
-		document.body.dataset.theme = theme;
+		if (theme === 'dark') {
+			document.body.setAttribute('data-theme', 'dark');
+		} else {
+			document.body.removeAttribute('data-theme');
+		}
 		localStorage.setItem('theme', theme);
 	}, [theme]);
 
@@ -54,4 +59,13 @@ export function ThemeProvider({ children }) {
 			{children}
 		</ThemeContext.Provider>
 	);
+}
+
+// Custom hook to use theme context
+export function useTheme() {
+	const context = useContext(ThemeContext);
+	if (!context) {
+		throw new Error('useTheme must be used within a ThemeProvider');
+	}
+	return context;
 }
