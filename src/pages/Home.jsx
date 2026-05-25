@@ -1,6 +1,6 @@
 
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 function BackToTop() {
   const [show, setShow] = useState(false);
   useEffect(() => {
@@ -21,38 +21,49 @@ function BackToTop() {
 }
 import SearchBar from '../components/SearchBar';
 import CountryCard from '../components/CountryCard';
+import Loader from '../components/Loader';
 
-function Home() {
   const [query, setQuery] = useState('');
   const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const lastQuery = useRef('');
 
+  // Fetch countries from API for a given query
+  function fetchCountries(q) {
+    setLoading(true);
+    fetch(`https://restcountries.com/v3.1/name/${q}`)
+      .then((res) => {
+        if (!res.ok) throw new Error('Not found');
+        return res.json();
+      })
+      .then((data) => {
+        setCountries(data);
+        setError(null);
+      })
+      .catch((err) => {
+        setCountries([]);
+        if (err.message === 'Not found') {
+          setError('No countries found.');
+        } else {
+          setError('Network error. Please check your connection.');
+        }
+      })
+      .finally(() => setLoading(false));
+  }
+
+  // Debounce search input: only fetch after 400ms of no typing
   useEffect(() => {
     if (!query) {
       setCountries([]);
       setError(null);
       return;
     }
-
+    lastQuery.current = query;
     const timer = setTimeout(() => {
-      setLoading(true);
-      fetch(`https://restcountries.com/v3.1/name/${query}`)
-        .then((res) => {
-          if (!res.ok) throw new Error('Not found');
-          return res.json();
-        })
-        .then((data) => {
-          setCountries(data);
-          setError(null);
-        })
-        .catch(() => {
-          setCountries([]);
-          setError('No countries found.');
-        })
-        .finally(() => setLoading(false));
+      fetchCountries(query);
     }, 400);
-
+    // Cleanup cancels previous timer if query changes quickly
     return () => clearTimeout(timer);
   }, [query]);
 
@@ -60,8 +71,15 @@ function Home() {
     <div className="home">
       <SearchBar query={query} onQueryChange={setQuery} />
 
-      {loading && <p className="home__status">Loading...</p>}
-      {error && <p className="home__status home__status--error">{error}</p>}
+      {loading && <Loader />}
+      {error && (
+        <div className="home__status home__status--error">
+          <p>{error}</p>
+          {error.includes('Network') && (
+            <button onClick={() => fetchCountries(lastQuery.current)} className="retry-btn">Retry</button>
+          )}
+        </div>
+      )}
 
       {!loading && !error && countries.length > 0 && (
         <div className="cards-grid">

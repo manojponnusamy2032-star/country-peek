@@ -9,7 +9,7 @@ function CountryCard({ country }) {
 	const isFav = favourites.some((c) => c.cca3 === cca3);
 
 	return (
-		<div className="card" tabIndex={0} aria-label={`Country card for ${name?.common}`}>
+		<div className="card" tabIndex={0} aria-label={`Country card for ${name?.common}`} role="group">
 			<button
 				className={`fav-btn${isFav ? ' fav-btn--active' : ''}`}
 				aria-label={isFav ? 'Remove from favourites' : 'Add to favourites'}
@@ -18,10 +18,23 @@ function CountryCard({ country }) {
 					toggleFavourite(country);
 				}}
 				tabIndex={0}
+				onKeyDown={e => {
+					if (e.key === 'Enter' || e.key === ' ') {
+						e.preventDefault();
+						toggleFavourite(country);
+					}
+				}}
 			>
 				{isFav ? '★' : '☆'}
 			</button>
-			<Link to={`/country/${cca3}`} tabIndex={-1}>
+			<Link to={`/country/${cca3}`} tabIndex={-1} aria-label={`View details for ${name?.common}`}
+				role="link"
+				onKeyDown={e => {
+					if (e.key === 'Enter' || e.key === ' ') {
+						e.currentTarget.click();
+					}
+				}}
+			>
 				<img
 					src={flags?.svg}
 					alt={`Flag of ${name?.common}`}

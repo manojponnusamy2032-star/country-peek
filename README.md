@@ -1,3 +1,11 @@
+## How it works
+
+1. The Home page uses a debounced search input to fetch country data from the RestCountries API. The fetch only triggers after 400ms of no typing, reducing unnecessary API calls.
+2. While loading, animated skeleton cards are shown for better UX.
+3. If the API returns an error or is unreachable, a user-friendly error message and a Retry button are displayed.
+4. Users can star/unstar countries as favourites, which are saved in localStorage and shown on the Favourites page.
+5. All interactive elements are keyboard accessible and use ARIA roles for accessibility.
+6. The Country Details page shows more info when a card is clicked.
 <<<<<<< HEAD
 # Demo PR: This line is added on part-2/api-and-cards branch to demonstrate a pull request.
 # country-peek

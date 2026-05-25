@@ -11,7 +11,7 @@ function App() {
           <main>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/country/:name" element={<div>Country detail placeholder</div>} />
+              <Route path="/country/:name" element={<CountryPage />} />
                 <Route path="/favourites" element={<Favourites />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
