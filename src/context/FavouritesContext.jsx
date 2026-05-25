@@ -16,6 +16,8 @@ function favouritesReducer(state, action) {
 	}
 }
 
+
+
 // 2. Context
 export const FavouritesContext = createContext();
 

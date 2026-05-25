@@ -1,52 +1,66 @@
-## How it works
+# CountryPeek 🌍
 
-1. The Home page uses a debounced search input to fetch country data from the RestCountries API. The fetch only triggers after 400ms of no typing, reducing unnecessary API calls.
-2. While loading, animated skeleton cards are shown for better UX.
-3. If the API returns an error or is unreachable, a user-friendly error message and a Retry button are displayed.
-4. Users can star/unstar countries as favourites, which are saved in localStorage and shown on the Favourites page.
-5. All interactive elements are keyboard accessible and use ARIA roles for accessibility.
-6. The Country Details page shows more info when a card is clicked.
-<<<<<<< HEAD
-# Demo PR: This line is added on part-2/api-and-cards branch to demonstrate a pull request.
-# country-peek
-=======
-# Demo PR: This line is added on part-2/api-and-cards branch to demonstrate a pull request.
-# React + Vite
+A modern, responsive React app to search, explore, and favourite countries around the world — powered by the [RestCountries API](https://restcountries.com/).
 
-## CountryPeek Features
+## Features
 
-- 🔍 Search for countries by name
-- 🌗 Toggle between dark and light themes
-- 📱 Responsive design
-- ⚡ Fast filtering and instant feedback
-- 🚫 "No results found" message for empty searches
+- 🔍 **Live Search** — debounced search with instant results
+- 🌐 **Region Filter** — filter countries by continent
+- 🔤 **Sort** — sort by name (A–Z) or population (high–low)
+- ⭐ **Favourites** — save countries to a personal list (persisted in localStorage)
+- 🌗 **Dark / Light Theme** — toggle with persistent preference
+- 📱 **Responsive Design** — works on mobile, tablet, and desktop
+- ♿ **Accessible** — ARIA labels, keyboard navigation, focus management
+- ⚡ **Skeleton Loaders** — smooth loading experience
+- 🔗 **Border Countries** — clickable links to neighbouring countries
 
-## Usage
+## Tech Stack
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-2. Start the development server:
-   ```bash
-   npm run dev
-   ```
-3. Open [http://localhost:5173](http://localhost:5173) in your browser.
+| Layer       | Technology                  |
+| ----------- | --------------------------- |
+| Framework   | React 19 + Vite 8           |
+| Routing     | React Router v7             |
+| State       | useReducer + Context API    |
+| Styling     | Vanilla CSS + CSS Variables |
+| API         | RestCountries v3.1          |
+| Deployment  | GitHub Pages                |
 
-## Screenshots
+## Getting Started
 
-![Light Theme](public/screenshot-light.png)
-![Dark Theme](public/screenshot-dark.png)
+```bash
+# 1. Install dependencies
+npm install
 
----
+# 2. Start development server
+npm run dev
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 3. Build for production
+npm run build
 
-Currently, two official plugins are available:
+# 4. Preview production build
+npm run preview
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
->>>>>>> 6a4acad (feat: favourites, clear search, back to top, and accessibility improvements)
+```
+src/
+├── components/     # Header, CountryCard, FilterBar, SearchBar, Loader
+├── context/        # ThemeContext, FavouritesContext
+├── hooks/          # useCountry (custom hook)
+├── pages/          # Home, CountryPage, Favourites, NotFound
+└── styles/         # App.css (design system + responsive)
+```
+
+## Deployment (GitHub Pages)
+
+The app is configured with `base: '/country-peek/'` in `vite.config.js` for GitHub Pages.
+
+```bash
+npm run build
+# Deploy the dist/ folder to GitHub Pages
+```
+
+## Built By
+
+**Manoj Ponnusamy** — Data from [RestCountries API](https://restcountries.com/)
