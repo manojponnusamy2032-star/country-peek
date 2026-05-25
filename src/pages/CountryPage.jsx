@@ -1,47 +1,70 @@
-import { useParams, Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import NotFound from './NotFound';
+import { useParams, useNavigate } from 'react-router-dom';
+import useCountry from '../hooks/useCountry';
+import '../styles/App.css';
+
 
 function CountryPage() {
-	const { name } = useParams();
-	const [country, setCountry] = useState(null);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
+	const { code } = useParams();
+	const navigate = useNavigate();
+	const { country, loading, error } = useCountry(code);
 
-	useEffect(() => {
-		setLoading(true);
-		fetch(`https://restcountries.com/v3.1/alpha/${name}`)
-			.then(res => {
-				if (!res.ok) throw new Error('Not found');
-				return res.json();
-			})
-			.then(data => {
-				setCountry(data[0]);
-				setError(null);
-			})
-			.catch(() => {
-				setCountry(null);
-				setError('Country not found.');
-			})
-			.finally(() => setLoading(false));
-	}, [name]);
-
-
-	if (loading) return <p className="home__status">Loading...</p>;
-	if (error) return <NotFound />;
+	if (loading) return <p className="page-status">Loading...</p>;
+	if (error) return <p className="page-status page-status--error">{error}</p>;
 	if (!country) return null;
 
+	const {
+		name,
+		flags,
+		population,
+		region,
+		subregion,
+		capital,
+		languages,
+		currencies,
+		borders,
+		area,
+		timezones,
+	} = country;
+
+	const languageList = languages ? Object.values(languages) : [];
+	const currencyList = currencies ? Object.values(currencies).map(c => c.name) : [];
+
 	return (
-		<div className="home">
-			<Link to="/">← Back</Link>
-			<h2>{country.name?.common}</h2>
-			<img src={country.flags?.svg} alt={`Flag of ${country.name?.common}`} style={{width: '200px', borderRadius: '1rem'}} />
-			<p><b>Population:</b> {country.population?.toLocaleString()}</p>
-			<p><b>Region:</b> {country.region}</p>
-			<p><b>Capital:</b> {country.capital?.[0] ?? 'N/A'}</p>
-			<p><b>Subregion:</b> {country.subregion}</p>
-			<p><b>Area:</b> {country.area?.toLocaleString()} km²</p>
-			<p><b>Timezones:</b> {country.timezones?.join(', ')}</p>
+		<div className="country-page">
+			<button className="back-btn" onClick={() => navigate(-1)}>&larr; Back</button>
+			<div className="country-page__layout">
+				<img
+					src={flags?.svg}
+					alt={`Flag of ${name?.common}`}
+					className="country-page__flag"
+				/>
+				<div className="country-page__info">
+					<h2 className="country-page__name">{name?.common}</h2>
+					<p className="country-page__official">{name?.official}</p>
+					<div className="country-page__details">
+						<div>
+							<p><b>Population:</b> {population?.toLocaleString()}</p>
+							<p><b>Region:</b> {region}</p>
+							<p><b>Subregion:</b> {subregion}</p>
+							{capital?.[0] && <p><b>Capital:</b> {capital[0]}</p>}
+							<p><b>Area:</b> {area?.toLocaleString()} km²</p>
+							<p><b>Timezones:</b> {timezones?.join(', ')}</p>
+						</div>
+						<div>
+							<p><b>Languages:</b> {languageList.join(', ') || 'N/A'}</p>
+							<p><b>Currencies:</b> {currencyList.join(', ') || 'N/A'}</p>
+						</div>
+					</div>
+					{borders && borders.length > 0 && (
+						<div className="country-page__borders">
+							<b>Borders:</b>
+							{borders.map((b) => (
+								<span key={b} className="border-badge">{b}</span>
+							))}
+						</div>
+					)}
+				</div>
+			</div>
 		</div>
 	);
 }

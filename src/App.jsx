@@ -15,7 +15,7 @@ function App() {
                 <Route path="/favourites" element={<Favourites />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
-          </main>
+                  <Route path="/country/:code" element={<CountryPage />} />
           <footer className="footer">
             <p>
               Data from <a href="https://restcountries.com/" target="_blank" rel="noopener noreferrer">RestCountries API</a> | Built by Manoj Ponnusamy

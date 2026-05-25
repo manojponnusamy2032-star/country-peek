@@ -1,3 +1,92 @@
+/* Country Detail Page Styles */
+.country-page {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+}
+.back-btn {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  transition: background 0.2s, border 0.2s;
+}
+.back-btn:hover {
+  background: #f3f4f6;
+  border-color: #2563eb;
+}
+.country-page__layout {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+.country-page__flag {
+  width: 100%;
+  max-width: 340px;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+.country-page__info {
+  display: flex;
+  flex-direction: column;
+}
+.country-page__name {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+.country-page__official {
+  color: #64748b;
+  margin-bottom: 1.5rem;
+}
+.country-page__details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.country-page__details p {
+  margin: 0.25rem 0;
+}
+.country-page__borders {
+  margin-top: 1rem;
+}
+.border-badge {
+  display: inline-block;
+  margin: 0.25rem 0.5rem 0.25rem 0;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid #2563eb;
+  border-radius: 1rem;
+  background: #f3f4f6;
+  color: #2563eb;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+.page-status {
+  padding: 2rem 0;
+  color: #64748b;
+  text-align: center;
+}
+.page-status--error {
+  color: #ef4444;
+}
+@media (max-width: 800px) {
+  .country-page__layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .country-page {
+    padding: 1rem;
+  }
+}
 .footer {
   margin-top: 2rem;
   padding: 1.5rem 0;
